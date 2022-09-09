@@ -1,2 +1,2 @@
 # ms_kbtu_dv
-Data visualisation course
+Data visualization course
