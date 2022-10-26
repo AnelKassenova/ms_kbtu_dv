@@ -1,10 +1,10 @@
-async function drawBar(buttoni, temp) {
+async function drawBar() {
 
     const dataset = await d3.json("./my_weather_data.json")
     //Accessor
     const xAccessor = d => d[temp];
     const yAccessor = d => d.length;
-    console.log(yAccessor(temp))
+ 
 
     const width = 600
     let dimensions = {
@@ -27,7 +27,6 @@ async function drawBar(buttoni, temp) {
     // 3. Draw canvas
 
     const wrapper = d3.select("#wrapper")
-        .html("") 
         .append("svg")
         .attr("width", dimensions.width)
         .attr("height", dimensions.height);
@@ -59,10 +58,9 @@ async function drawBar(buttoni, temp) {
         .append("g");
 
 
-    const margin = 40;
     const barPadding = 1
     const barRect = binGroups.append("rect")
-        .attr("x", d => xScaler(d.x0) + barPadding / 2 + margin) 
+        .attr("x", d => xScaler(d.x0) + barPadding / 2) 
         .attr("y", d => yScaler(yAccessor(d)))
         .attr("width", d => d3.max([0, xScaler(d.x1) - xScaler(d.x0) - barPadding]))
         .attr("height", d => dimensions.boundedHeight - yScaler(yAccessor(d)))
@@ -90,19 +88,18 @@ async function drawBar(buttoni, temp) {
         .scale(xScaler);
     const xAxis = bounds.append("g")
         .call(xAxisGen)
-        .attr("transform", `translate(${margin},${dimensions.boundedHeight} )`);
-
 
     const yAxisGen = d3.axisLeft()
         .scale(yScaler);
     const yAxis = bounds.append("g")
         .call(yAxisGen)
-        .attr("transform", `translate(${margin}, 0)`);
+        .style("transform",`translateY(${dimensions.boundedHeight}px)`) 
+        
 
     
     const barText = binGroups.filter(yAccessor)
         .append("text")
-        .attr("x", d => xScaler(d.x0) + (xScaler(d.x1) - xScaler(d.x0)) / 2 + margin)
+        .attr("x", d => xScaler(d.x0) + (xScaler(d.x1) - xScaler(d.x0)) / 2)
         .attr("y", d => yScaler(yAccessor(d)) - 5)
         .text(yAccessor)
         .attr("fill", "darkgrey")
