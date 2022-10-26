@@ -102,7 +102,7 @@ async function drawBar(buttoni, temp) {
     
     const barText = binGroups.filter(yAccessor)
         .append("text")
-        .attr("x", d => xScaler(d.x0) + (xScaler(d.x1) - xScaler(d.x0)) / 2 + margin)
+        .attr("x", d => xScaler(d.x0) + (xScaler(d.x1) - xScaler(d.x0)) / 2)
         .attr("y", d => yScaler(yAccessor(d)) - 5)
         .text(yAccessor)
         .attr("fill", "darkgrey")
