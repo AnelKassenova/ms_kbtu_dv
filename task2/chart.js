@@ -94,7 +94,20 @@ async function drawBar() {
     const yAxis = bounds.append("g")
         .call(yAxisGen)
         .style("transform",`translateY(${dimensions.boundedHeight}px)`) 
-        
+    
+    //add "Count" 
+    bounds.append('text')
+        .attr("y", 30)
+        .attr("x", -240)
+        .attr("fill", "black")
+        .text("Count")
+    
+    //add "Temperature"
+    bounds.append('text')
+        .attr("x", 450)
+        .attr("y", 450)
+        .attr("fill", "black")
+        .text("Temperature")
 
     
     const barText = binGroups.filter(yAccessor)
